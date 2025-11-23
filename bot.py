@@ -229,6 +229,9 @@ async def on_message(message: discord.Message):
                     text = await asyncio.to_thread(reader.read_pdf, file_bytes)
                     print(f"--- PDF Content ({attachment.filename}) ---\n{text[:200]}...\n-----------------------------------")
                     
+                    if not text or len(text.strip()) < 50:
+                        raise ValueError("PDF content is empty or too short")
+                    
                     summary = await summarizer.summarize(text)
                     
                     # Rename thread if we created it
@@ -282,6 +285,9 @@ async def on_message(message: discord.Message):
             # Run async read_link
             text = reader.read_link(processing_url)
             print(f"--- Link Content ({processing_url}) ---\n{text[:200]}...\n-----------------------------------")
+            
+            if not text or len(text.strip()) < 50:
+                raise ValueError("Link content is empty or too short")
             
             summary = await summarizer.summarize(text)
             
