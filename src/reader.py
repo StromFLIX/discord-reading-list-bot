@@ -1,10 +1,6 @@
 import io
-import requests
-from bs4 import BeautifulSoup
 from pypdf import PdfReader
-import re
 import trafilatura
-from playwright.async_api import async_playwright
 
 class Reader:
     def read_pdf(self, file_bytes: bytes) -> str:
